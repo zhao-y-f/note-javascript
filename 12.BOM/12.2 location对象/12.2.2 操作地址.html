@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>Enjoy this page for a second, because you won't be coming back here.</p>
+    <script>
+        // 可以通过修改 location 对象修改浏览器的地址。首先，最常见的是使用 assign() 方法并传入一个 URL，如下所示：
+        location.assign("http://www.qq.com");
+        // 这行代码会立即启动导航到新 URL 的操作，同时在浏览器历史记录中增加一条记录。如果给
+        // location.href 或 window.location 设置一个 URL，也会以同一个 URL 值调用 assign() 方法。比
+        // 如，下面两行代码都会执行与显式调用 assign() 一样的操作：
+        window.location = "http://www.qq.com";
+        location.href = "http://www.qq.com";//三种里最常见的
+
+        //修改 location 对象的属性也会修改当前加载的页面。其中， hash 、 search 、 hostname 、 pathname
+        //和 port 属性被设置为新值之后都会修改当前 URL，如下面的例子所示：
+        // 假设当前 URL 为 http://www.wrox.com/WileyCDA/
+        // 把 URL 修改为 http://www.wrox.com/WileyCDA/#section1
+        location.hash = "#section1";
+        // 把 URL 修改为 http://www.wrox.com/WileyCDA/?q=javascript
+        location.search = "?q=javascript";
+        // 把 URL 修改为 http://www.somewhere.com/WileyCDA/
+        location.hostname = "www.somewhere.com";
+        // 把 URL 修改为 http://www.somewhere.com/mydir/
+        location.pathname = "mydir";
+        // 把 URL 修改为 http://www.somewhere.com:8080/WileyCDA/
+        location.port = 8080;
+        //除了 hash 之外，只要修改 location 的一个属性，就会导致页面重新加载新 URL。
+
+        //注意 修改 hash 的值会在浏览器历史中增加一条新记录。在早期的 IE 中，点击“后退”
+        //和“前进”按钮不会更新 hash 属性，只有点击包含散列的 URL 才会更新 hash 的值。
+
+        setTimeout(() => location.replace("http://www.wrox.com/"), 1000);
+        //浏览器加载这个页面 1 秒之后会重定向到 www.wrox.com。此时，“后退”按钮是禁用状态，即不能
+        //返回这个示例页面，除非手动输入完整的 URL。
+
+        // 最后一个修改地址的方法是 reload() ，它能重新加载当前显示的页面。调用 reload() 而不传参
+        // 数，页面会以最有效的方式重新加载。也就是说，如果页面自上次请求以来没有修改过，浏览器可能会
+        // 从缓存中加载页面。如果想强制从服务器重新加载，可以像下面这样给 reload() 传个 true ：
+        location.reload(); // 重新加载，可能(优先)是从缓存加载或者history.go(0)普通刷新
+        location.reload(true); // 重新加载，从服务器加载
+        // 脚本中位于 reload() 调用之后的代码可能执行也可能不执行，这取决于网络延迟和系统资源等因
+        // 素。为此，最好把 reload() 作为最后一行代码。
+    </script>
+</body>
+
+</html>

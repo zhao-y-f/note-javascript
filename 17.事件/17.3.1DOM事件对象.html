@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="myBtn"></button>
+
+    <script>
+        //                                      17.3事件对象
+        // 在 DOM 中发生事件时，所有相关信息都会被收集并存储在一个名为 event 的对象中。这个对象包
+        // 含了一些基本信息，比如导致事件的元素、发生的事件类型，以及可能与特定事件相关的任何其他数据。
+        // 例如，鼠标操作导致的事件会生成鼠标位置信息，而键盘操作导致的事件会生成与被按下的键有关的信
+        // 息。所有浏览器都支持这个 event 对象，尽管支持方式不同。
+
+        //                                      17.3.1DOM事件对象
+        //在 DOM 合规的浏览器中， event 对象是传给事件处理程序的唯一参数。不管以哪种方式（DOM0
+        //或 DOM2）指定事件处理程序，都会传入这个 event 对象。下面的例子展示了在两种方式下都可以使
+        //用事件对象：
+        let btn = document.getElementById("myBtn");
+
+        btn.onclick = function (event) {
+            console.log(event.type); // "click"
+        };
+        btn.addEventListener("click", (event) => {
+            console.log(event.type); // "click"
+        }, false);
+
+        //在通过 HTML 属性指定的事件处理程序中，同样可以使用变量 event 引用事件对象。下面的例子
+        //中演示了如何使用这个变量：
+        //<input type="button" value="Click Me" onclick="console.log(event.type)">
+
+        // 事件对象包含与特定事件相关的属性和方法。不同的事件生成的事件对象也会包含不同
+        // 的属性和方法。不过，所有事件对象都会包含下表列出的这些公共属性和方法。
+
+        // 属性 / 方法                   类 型  读/写          说 明
+        // bubbles                      布尔值  只读        表示事件是否冒泡
+        // cancelable                   布尔值  只读        表示是否可以取消事件的默认行为
+        // currentTarget                元素    只读        当前事件处理程序所在的元素
+        // defaultPrevented             布尔值  只读        true 表示已经调用 preventDefault() 方法（DOM3Events 中新增）
+        // detail                       整数    只读        事件相关的其他信息
+        // eventPhase                   整数    只读        表示调用事件处理程序的阶段：1代表捕获阶段，2代表到达目标，3代表冒泡阶段
+        // preventDefault()             函数    只读        用于取消事件的默认行为。只有 cancelable 为 true 才可以调用这个方法
+        // stopImmediatePropagation()   函数    只读        用于取消所有后续事件捕获或事件冒泡，并阻止调用任何后续事件处理程序（DOM3 Events 中新增）
+        // stopPropagation()            函数    只读        用于取消所有后续事件捕获或事件冒泡。只有 bubbles为 true 才可以调用这个方法
+        // target                       元素    只读        事件目标
+        // trusted                      布尔值  只读        true 表示事件是由浏览器生成的。 false 表示事件是开发者通过 JavaScript 创建的（DOM3 Events 中新增）
+        // type                         字符串  只读        被触发的事件类型
+        // View                  AbstractView  只读         与事件相关的抽象视图。等于事件所发生的 window 对象
+    </script>
+</body>
+
+</html>

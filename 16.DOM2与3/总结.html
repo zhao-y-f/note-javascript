@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            width: 30px;
+            height: 30px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="box" style="width: 280px;margin : 0 auto;">
+
+    </div>
+    <script>
+        let myDiv = document.querySelector(".box")
+        console.log("宽", myDiv.style.width);
+        console.log("cssText", myDiv.style.cssText);
+        console.log(document.styleSheets);
+        console.log(document.styleSheets[0]);//.insertRule("规则"，索引)//.deleteRule(索引)
+        console.log(document.styleSheets[0].cssRules);
+        console.log(document.styleSheets[0].cssRules[0]);
+
+
+        //                             1. DOM 样式属性和方法
+        // DOM2 Style 规范也在 style 对象上定义了一些属性和方法。这些属性和方法提供了元素 style 属
+        //     性的信息并支持修改，列举如下。
+        //  cssText ，包含 style 属性中的 CSS 代码。
+        //  length ，应用给元素的 CSS 属性数量。
+        for (let i = 0, len = myDiv.style.length; i < len; i++) {
+            console.log(myDiv.style[i]); // 或者用 myDiv.style.item(i)
+            let value = myDiv.style.getPropertyValue("width");
+            console.log(value);
+            console.log(getComputedStyle(myDiv).width);//border不会正常返回（默认值的 CSS属性会出现在计算样式里
+            console.log("myDiv.getBoundingClientRect()"+myDiv.getBoundingClientRect());
+
+        }
+        //.style.以下
+        //  parentRule ，表示 CSS 信息的 CSSRule 对象（下一节会讨论 CSSRule 类型）。
+        //  getPropertyCSSValue(propertyName) ，返回包含 CSS属性 propertyName 值的 CSSValue对象（已废弃）。
+        //  getPropertyPriority(propertyName) ，如果 CSS 属性 propertyName 使用了!important
+        // 则返回 "important" ，否则返回空字符串。
+        //  getPropertyValue(propertyName) ，返回属性 propertyName 的字符串值。
+        //  item(index) ，返回索引为 index 的 CSS 属性名。
+        //  removeProperty(propertyName) ，从样式中删除 CSS 属性 propertyName 。
+        //  setProperty(propertyName, value, priority) ，设置 CSS 属性 propertyName 的值为
+        //     value ， priority 是 "important" 或空字符串
+
+
+        //                                  操作样式表
+        // 1. CSS 规则
+        // CSSRule 类型表示样式表中的一条规则。这个类型也是一个通用基类，很多类型都继承它，但其中
+        // 最常用的是表示样式信息的 CSSStyleRule （其他 CSS 规则还有 @import 、 @font-face 、 @page 和
+        // @charset 等，不过这些规则很少需要使用脚本来操作）。以下是 CSSStyleRule 对象上可用的属性。
+        //  cssText ，返回整条规则的文本。这里的文本可能与样式表中实际的文本不一样，因为浏览器
+        // 内部处理样式表的方式也不一样。Safari 始终会把所有字母都转换为小写。
+        //  parentRule ，如果这条规则被其他规则（如 @media ）包含，则指向包含规则，否则就是 null 。
+        //  parentStyleSheet ，包含当前规则的样式表。
+        //  selectorText ，返回规则的选择符文本。这里的文本可能与样式表中实际的文本不一样，因为
+        // 浏览器内部处理样式表的方式也不一样。这个属性在 Firefox、Safari、Chrome 和 IE 中是只读的，
+        // 在 Opera 中是可以修改的。
+        //  style ，返回 CSSStyleDeclaration 对象，可以设置和获取当前规则中的样式。
+        //  type ，数值常量，表示规则类型。对于样式规则，它始终为 1 。
+
+        //                                  元素尺寸
+        //偏移尺寸
+        //  offsetHeight ，元素在垂直方向上占用的像素尺寸，包括它的高度、水平滚动条高度（如果可
+        // 见）和上、下边框的高度。
+        //  offsetLeft ，元素左边框外侧距离包含元素左边框内侧的像素数。
+        //  offsetTop ，元素上边框外侧距离包含元素上边框内侧的像素数。
+        //  offsetWidth ，元素        在水平方向上占用的像素尺寸，包括它的宽度、垂直滚动条宽度（如果可
+        // 见）和左、右边框的宽度。    
+
+        //客户端尺寸
+        // 客户端尺寸实际上就是元素内部的空间，因此不包含滚动条占用的空间。这两个属性最常用于确定
+        // 浏览器视口尺寸，即检测 document.documentElement 的 clientWidth 和 clientHeight 。
+    </script>
+</body>
+
+</html>
