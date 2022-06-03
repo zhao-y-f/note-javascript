@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 函数是ECMAScript中最有意思的部分之一，这主要是因为函数实际上是对象。每个函数都是 Function
+        // 类型的实例，而 Function 也有属性和方法，跟其他引用类型一样。因为函数是对象，所以函数名就是
+        // 指向函数对象的指针，而且不一定与函数本身紧密绑定。函数通常以函数声明的方式定义，比如：
+        function sum(num1, num2) {
+            return num1 + num2;
+        }
+        // 注意函数定义最后没有加分号。
+        // 另一种定义函数的语法是函数表达式。函数表达式与函数声明几乎是等价的：
+        let sum = function (num1, num2) {
+            return num1 + num2;
+        };
+        // 这里，代码定义了一个变量 sum 并将其初始化为一个函数。注意 function 关键字后面没有名称，
+        // 因为不需要。这个函数可以通过变量 sum 来引用。
+        // 注意这里的函数末尾是有分号的，与任何变量初始化语句一样。
+        // 还有一种定义函数的方式与函数表达式很像，叫作“箭头函数”（arrow function），如下所示：
+        let sum = (num1, num2) => {
+            return num1 + num2;
+        };
+        // 最后一种定义函数的方式是使用 Function 构造函数。这个构造函数接收任意多个字符串参数，最
+        // 后一个参数始终会被当成函数体，而之前的参数都是新函数的参数。来看下面的例子：
+        let sum = new Function("num1", "num2", "return num1 + num2"); // 不推荐
+        // 我们不推荐使用这种语法来定义函数，因为这段代码会被解释两次：第一次是将它当作常规
+        // ECMAScript 代码，第二次是解释传给构造函数的字符串。这显然会影响性能。不过，把函数想象为对
+        // 象，把函数名想象为指针是很重要的。而上面这种语法很好地诠释了这些概念。
+
+
+                                        // 10.1 箭头函数
+        //  ECMAScript 6 新增了使用胖箭头（ => ）语法定义函数表达式的能力。很大程度上，箭头函数实例
+        // 化的函数对象与正式的函数表达式创建的函数对象行为是相同的。任何可以使用函数表达式的地方，都
+        // 可以使用箭头函数：
+        let arrowSum = (a, b) => {
+            return a + b;
+        };
+        let functionExpressionSum = function (a, b) {
+            return a + b;
+        };
+        console.log(arrowSum(5, 8)); // 13
+        console.log(functionExpressionSum(5, 8)); // 13
+
+        //箭头函数简洁的语法非常适合嵌入函数的场景：
+        let ints = [1, 2, 3];
+        console.log(ints.map(function (i) { return i + 1; })); // [2, 3, 4]
+        console.log(ints.map((i) => { return i + 1 })); // [2, 3, 4]
+        //如果只有一个参数，那也可以不用括号。只有没有参数，或者多个参数的情况下，才需要使用括号：
+        // 以下两种写法都有效
+        let double = (x) => { return 2 * x; };
+        let triple = x => { return 3 * x; };
+        // 没有参数需要括号
+        let getRandom = () => { return Math.random(); };
+        // 多个参数需要括号
+        let sum = (a, b) => { return a + b; };
+        // 无效的写法：
+        let multiply = a, b => { return a * b; };
+        //箭头函数也可以不用大括号，但这样会改变函数的行为。使用大括号就说明包含“函数体”，可以
+        //在一个函数中包含多条语句，跟常规的函数一样。如果不使用大括号，那么箭头后面就只能有一行代码，
+        //比如一个赋值操作，或者一个表达式。而且，省略大括号会隐式返回这行代码的值：
+        // 以下两种写法都有效，而且返回相应的值
+        let double = (x) => { return 2 * x; };
+        let triple = (x) => 3 * x;
+        // 可以赋值
+        let value = {};
+        let setName = (x) => x.name = "Matt";
+        setName(value);
+        console.log(value.name); // "Matt"
+        // 无效的写法：
+        let multiply = (a, b) => return a * b;
+        //箭头函数虽然语法简洁，但也有很多场合不适用。箭头函数不能使用 arguments 、 super 和
+        //new.target ，也不能用作构造函数。此外，箭头函数也没有 prototype 属性。
+    </script>
+</body>
+
+</html>

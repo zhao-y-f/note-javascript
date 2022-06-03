@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // ECMAScript 函数不能像传统编程那样重载。在其他语言比如 Java 中，一个函数可以有两个定义，
+        // 只要签名（接收参数的类型和数量）不同就行。如前所述，ECMAScript 函数没有签名，因为参数是由
+        // 包含零个或多个值的数组表示的。没有函数签名，自然也就没有重载。
+        // 如果在 ECMAScript 中定义了两个同名函数，则后定义的会覆盖先定义的。来看下面的例子：
+        function addSomeNumber(num) {
+            return num + 100;
+        }
+        function addSomeNumber(num) {
+            return num + 200;
+        }
+        let result = addSomeNumber(100); // 300
+        // 这里，函数 addSomeNumber() 被定义了两次。第一个版本给参数加 100，第二个版本加 200。最
+        // 后一行调用这个函数时，返回了 300，因为第二个定义覆盖了第一个定义。
+        // 前面也提到过，可以通过检查参数的类型和数量，然后分别执行不同的逻辑来模拟函数重载。
+        // 把函数名当成指针也有助于理解为什么 ECMAScript 没有函数重载。在前面的例子中，定义两个同
+        // 名的函数显然会导致后定义的重写先定义的。而那个例子几乎跟下面这个是一样的：
+        let addSomeNumber = function (num) {
+            return num + 100;
+        };
+        addSomeNumber = function (num) {
+            return num + 200;
+        };
+        let result = addSomeNumber(100); // 300
+        // 看这段代码应该更容易理解发生了什么。在创建第二个函数时，变量 addSomeNumber 被重写成保
+        // 存第二个函数对象了。
+        </script>
+</body>
+
+</html>
