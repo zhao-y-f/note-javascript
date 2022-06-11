@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // Fetch API 能够执行 XMLHttpRequest 对象的所有任务，但更容易使用，接口也更现代化，能够在
+        // Web 工作线程等现代 Web 工具中使用。 XMLHttpRequest 可以选择异步，而 Fetch API 则必须是异步。
+        // Fetch API 是 WHATWG 的一个“活标准”（living standard），用规范原文说，就是“Fetch 标准定义请求、
+        // 响应，以及绑定二者的流程：获取（fetch）”。
+
+        // Fetch API 本身是使用 JavaScript 请求资源的优秀工具，同时这个 API 也能够应用在服务线程
+        // （service worker）中，提供拦截、重定向和修改通过 fetch() 生成的请求接口。
+
+        //                              24.5.1 基本用法
+        // fetch() 方法是暴露在全局作用域中的，包括主页面执行线程、模块和工作线程。调用这个方法，
+        // 浏览器就会向给定 URL 发送请求。
+        // 1. 分派请求
+        // fetch() 只有一个必需的参数 input 。多数情况下，这个参数是要获取资源的 URL。这个方法返回
+        // 一个期约：
+        let r = fetch('/bar');
+        console.log(r); // Promise <pending>
+        // URL 的格式（相对路径、绝对路径等）的解释与 XHR 对象一样。
+        // 请求完成、资源可用时，期约会解决为一个 Response 对象。这个对象是 API 的封装，可以通过它
+        // 取得相应资源。获取资源要使用这个对象的属性和方法，掌握响应的情况并将负载转换为有用的形式，
+        // 如下所示：
+        fetch('bar.txt')
+            .then((response) => {
+                console.log(response);
+            });
+        // Response { type: "basic", url: ... }
+        // 2. 读取响应
+        // 读取响应内容的最简单方式是取得纯文本格式的内容，这要用到 text() 方法。这个方法返回一个
+        // 期约，会解决为取得资源的完整内容：
+        fetch('bar.txt')
+            .then((response) => {
+                response.text().then((data) => {
+                    console.log(data);
+                });
+            });
+        // bar.txt 的内容
+        // 内容的结构通常是打平的：
+        fetch('bar.txt')
+            .then((response) => response.text())
+            .then((data) => console.log(data));
+        // bar.txt 的内容
+    </script>
+</body>
+
+</html>

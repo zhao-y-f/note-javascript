@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 函数表达式虽然更强大，但也更容易让人迷惑。我们知道，定义函数有两种方式：函数声明和函数
+        // 表达式。函数声明是这样的：
+        function functionName(arg0, arg1, arg2) {
+            // 函数体
+        }
+
+        // 函数声明的关键特点是函数声明提升，即函数声明会在代码执行之前获得定义。这意味着函数声明
+        // 可以出现在调用它的代码之后：                     !!
+
+        sayHi();
+        function sayHi() {
+            console.log("Hi!");
+        }
+        // 这个例子不会抛出错误，因为 JavaScript 引擎会先读取函数声明，然后再执行代码。
+        // 第二种创建函数的方式就是函数表达式。函数表达式有几种不同的形式，最常见的是这样的：
+        let functionName = function (arg0, arg1, arg2) {
+            // 函数体
+        };
+
+        // 函数表达式看起来就像一个普通的变量定义和赋值，即创建一个函数再把它赋值给一个变量
+        // functionName 。这样创建的函数叫作匿名函数（anonymous funtion），因为 function 关键字后面没有
+        // 标识符。（匿名函数有也时候也被称为兰姆达函数）。未赋值给其他变量的匿名函数的 name 属性是空字
+        // 符串。
+
+        // 函数表达式跟 JavaScript 中的其他表达式一样，需要先赋值再使用。下面的例子会导致错误：
+        sayHi(); // Error! function doesn't exist yet
+        let sayHi = function () {
+            console.log("Hi!");
+        };
+        // 理解函数声明与函数表达式之间的区别，关键是理解提升。比如，以下代码的执行结果可能会出乎
+        // 意料：
+        // 千万别这样做！
+        if (condition) {
+            function sayHi() {
+                console.log('Hi!');
+            }
+        } else {
+            function sayHi() {
+                console.log('Yo!');
+            }
+        }
+        // 这段代码看起来很正常，就是如果 condition 为 true ，则使用第一个 sayHi() 定义；否则，就
+        // 使用第二个。事实上，这种写法在 ECAMScript 中不是有效的语法。JavaScript 引擎会尝试将其纠正为适
+        // 当的声明。问题在于浏览器纠正这个问题的方式并不一致。多数浏览器会忽略 condition 直接返回第
+        // 二个声明。Firefox 会在 condition 为 true 时返回第一个声明。这种写法很危险，不要使用。不过，
+        // 如果把上面的函数声明换成函数表达式就没问题了：
+        // 没问题
+        let sayHi;
+        if (condition) {
+            sayHi = function () {
+                console.log("Hi!");
+            };
+        } else {
+            sayHi = function () {
+                console.log("Yo!");
+            };
+        }
+        // 这个例子可以如预期一样，根据 condition 的值为变量 sayHi 赋予相应的函数。
+        // 创建函数并赋值给变量的能力也可以用于在一个函数中把另一个函数当作值返回：
+        function createComparisonFunction(propertyName) {
+            return function (object1, object2) {
+                let value1 = object1[propertyName];
+                let value2 = object2[propertyName];
+                if (value1 < value2) {
+                    return -1;
+                } else if (value1 > value2) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            };
+        }
+        // 这里的 createComparisonFunction() 函数返回一个匿名函数，这个匿名函数要么被赋值给一个
+        // 变量，要么可以直接调用。但在 createComparisonFunction() 内部，那个函数是匿名的。任何时候，
+        // 只要函数被当作值来使用，它就是一个函数表达式。本章后面会介绍，这并不是使用函数表达式的唯一
+        // 方式。                           ??
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 递归函数通常的形式是一个函数通过名称调用自己，如下面的例子所示：
+        function factorial(num) {
+            if (num <= 1) {
+                return 1;
+            } else {
+                return num * factorial(num - 1);
+            }
+        }
+        // 这是经典的递归阶乘函数。虽然这样写是可以的，但如果把这个函数赋值给其他变量，就会出问题：
+        let anotherFactorial = factorial;
+        factorial = null;
+        console.log(anotherFactorial(4)); // 报错
+        // 这里把 factorial() 函数保存在了另一个变量 anotherFactorial 中，然后将 factorial 设置
+        // 为 null ，于是只保留了一个对原始函数的引用。而在调用 anotherFactorial() 时，要递归调用
+        // factorial() ，但因为它已经不是函数了，所以会出错。在写递归函数时使用 arguments.callee 可
+        // 以避免这个问题。
+
+        // arguments.callee 就是一个指向正在执行的函数的指针，因此可以在函数内部递归调用，如下
+        // 所示：
+        function factorial(num) {
+            if (num <= 1) {
+                return 1;
+            } else {
+                return num * arguments.callee(num - 1);
+            }
+        }
+        // 像这里加粗的这一行一样，把函数名称替换成 arguments.callee ，可以确保无论通过什么变量
+        // 调用这个函数都不会出问题。因此在编写递归函数时， arguments.callee 是引用当前函数的首选。
+        // 不过，在严格模式下运行的代码是不能访问 arguments.callee 的，因为访问会出错。此时，可
+        // 以使用命名函数表达式（named function expression）达到目的。比如：
+        const factorial = (function f(num) {
+            if (num <= 1) {
+                return 1;
+            } else {
+                return num * f(num - 1);
+            }
+        });
+        // 这里创建了一个命名函数表达式 f() ，然后将它赋值给了变量 factorial 。即使把函数赋值给另
+        // 一个变量，函数表达式的名称 f 也不变，因此递归调用不会有问题。这个模式在严格模式和非严格模式
+        // 下都可以使用。
+    </script>
+</body>
+
+</html>
